@@ -1,4 +1,4 @@
-package com.dogukanhan.myapplication.model;
+package com.dogukanhan.ormlitetest.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

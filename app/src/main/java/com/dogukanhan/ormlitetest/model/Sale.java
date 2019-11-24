@@ -1,12 +1,14 @@
-package com.dogukanhan.myapplication.model;
+package com.dogukanhan.ormlitetest.model;
 
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.math.BigDecimal;
 
-public class Purchase {
+@DatabaseTable(tableName = "sale")
+public class Sale {
 
     @DatabaseField(generatedId = true)
     private Long id;
@@ -14,8 +16,8 @@ public class Purchase {
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "product_id")
     private Product product;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "wholesaler_id")
-    private Wholesaler wholesaler;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "customer_id")
+    private Customer customer;
 
     @DatabaseField
     private BigDecimal amount;
@@ -24,9 +26,9 @@ public class Purchase {
     private BigDecimal cost;
 
     @ForeignCollectionField
-    private ForeignCollection<Payout> payouts;
+    private ForeignCollection<Income> incomes;
 
-    public Purchase() {
+    public Sale() {
     }
 
     public Product getProduct() {
@@ -37,12 +39,12 @@ public class Purchase {
         this.product = product;
     }
 
-    public Wholesaler getWholesaler() {
-        return wholesaler;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setWholesaler(Wholesaler wholesaler) {
-        this.wholesaler = wholesaler;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public BigDecimal getAmount() {
@@ -61,12 +63,12 @@ public class Purchase {
         this.cost = cost;
     }
 
-    public ForeignCollection<Payout> getPayouts() {
-        return payouts;
+    public ForeignCollection<Income> getIncomes() {
+        return incomes;
     }
 
-    public void setPayouts(ForeignCollection<Payout> payouts) {
-        this.payouts = payouts;
+    public void setIncomes(ForeignCollection<Income> incomes) {
+        this.incomes = incomes;
     }
 
     public Long getId() {

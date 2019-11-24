@@ -1,4 +1,4 @@
-package com.dogukanhan.myapplication.config;
+package com.dogukanhan.ormlitetest.config;
 
 
 import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;

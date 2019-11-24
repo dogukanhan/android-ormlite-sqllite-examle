@@ -1,4 +1,4 @@
-package com.dogukanhan.myapplication;
+package com.dogukanhan.ormlitetest;
 
 import android.content.Context;
 

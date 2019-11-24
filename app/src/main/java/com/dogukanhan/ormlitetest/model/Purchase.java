@@ -1,14 +1,12 @@
-package com.dogukanhan.myapplication.model;
+package com.dogukanhan.ormlitetest.model;
 
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
-import com.j256.ormlite.table.DatabaseTable;
 
 import java.math.BigDecimal;
 
-@DatabaseTable(tableName = "sale")
-public class Sale {
+public class Purchase {
 
     @DatabaseField(generatedId = true)
     private Long id;
@@ -16,8 +14,8 @@ public class Sale {
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "product_id")
     private Product product;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "customer_id")
-    private Customer customer;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "wholesaler_id")
+    private Wholesaler wholesaler;
 
     @DatabaseField
     private BigDecimal amount;
@@ -26,9 +24,9 @@ public class Sale {
     private BigDecimal cost;
 
     @ForeignCollectionField
-    private ForeignCollection<Income> incomes;
+    private ForeignCollection<Payout> payouts;
 
-    public Sale() {
+    public Purchase() {
     }
 
     public Product getProduct() {
@@ -39,12 +37,12 @@ public class Sale {
         this.product = product;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Wholesaler getWholesaler() {
+        return wholesaler;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setWholesaler(Wholesaler wholesaler) {
+        this.wholesaler = wholesaler;
     }
 
     public BigDecimal getAmount() {
@@ -63,12 +61,12 @@ public class Sale {
         this.cost = cost;
     }
 
-    public ForeignCollection<Income> getIncomes() {
-        return incomes;
+    public ForeignCollection<Payout> getPayouts() {
+        return payouts;
     }
 
-    public void setIncomes(ForeignCollection<Income> incomes) {
-        this.incomes = incomes;
+    public void setPayouts(ForeignCollection<Payout> payouts) {
+        this.payouts = payouts;
     }
 
     public Long getId() {
