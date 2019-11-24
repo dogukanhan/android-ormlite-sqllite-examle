@@ -37,65 +37,50 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                     Purchase.class, Sale.class, Wholesaler.class)
     );
 
-    public final DAOMapper DAO = new DAOMapper();
+    private final Map<Class, Object> daos = new HashMap<>();
 
-    public class DAOMapper {
+    private <T, K> Dao<T, K> getOrAdd(Class<T> clazz, Class<K> pm) throws SQLException {
 
-        private DAOMapper() {
+        if (!entities.contains(clazz))
+            throw new SQLException("This class is not in the entities set please add");
 
+        if (!daos.containsKey(clazz)) {
+            daos.put(clazz, getDao(clazz));
         }
-
-        private final Map<Class, Object> daos = new HashMap<>();
-
-        private Object getOrAdd(Class clazz) throws SQLException {
-
-            if (!entities.contains(clazz))
-                throw new SQLException("This class is not in the entities set please add");
-
-            if (!daos.containsKey(clazz)) {
-                daos.put(clazz, getDao(clazz));
-            }
-            return daos.get(clazz);
-        }
-
-        public Dao<Category, String> Category() throws SQLException {
-            return (Dao<Category, String>) getDao(Category.class);
-        }
-
-        public Dao<Customer, Long> Customer() throws SQLException {
-            return (Dao<Customer, Long>) getDao(Customer.class);
-        }
-
-        public Dao<Payout, Long> Payout() throws SQLException {
-            return (Dao<Payout, Long>) getDao(Payout.class);
-        }
-
-        public Dao<Product, Long> Product() throws SQLException {
-            return (Dao<Product, Long>) getDao(Product.class);
-        }
-
-        public Dao<Purchase, Long> Purchase() throws SQLException {
-            return (Dao<Purchase, Long>) getDao(Purchase.class);
-        }
-
-        public Dao<Income, Long> Income() throws SQLException {
-            return (Dao<Income, Long>) getDao(Income.class);
-        }
-
-        public Dao<Sale, Long> Sale() throws SQLException {
-            return (Dao<Sale, Long>) getDao(Sale.class);
-        }
-
-        public Dao<Wholesaler, Long> Wholesaler() throws SQLException {
-            return (Dao<Wholesaler, Long>) getDao(Wholesaler.class);
-        }
-
-        private void clear() {
-            daos.clear();
-        }
-
+        return (Dao<T, K>) daos.get(clazz);
     }
 
+    public Dao<Category, String> getCategoryDao() throws SQLException {
+        return getOrAdd(Category.class, String.class);
+    }
+
+    public Dao<Customer, Long> getCustomerDao() throws SQLException {
+        return getOrAdd(Customer.class, Long.class);
+    }
+
+    public Dao<Payout, Long> getPayoutDao() throws SQLException {
+        return getOrAdd(Payout.class, Long.class);
+    }
+
+    public Dao<Product, Long> getProductDao() throws SQLException {
+        return getOrAdd(Product.class, Long.class);
+    }
+
+    public Dao<Purchase, Long> getPurchaseDao() throws SQLException {
+        return getOrAdd(Purchase.class, Long.class);
+    }
+
+    public Dao<Income, Long> getIncomeDao() throws SQLException {
+        return getOrAdd(Income.class, Long.class);
+    }
+
+    public Dao<Sale, Long> getSaleDao() throws SQLException {
+        return getOrAdd(Sale.class, Long.class);
+    }
+
+    public Dao<Wholesaler, Long> getWholesalerDao() throws SQLException {
+        return getOrAdd(Wholesaler.class, Long.class);
+    }
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -137,6 +122,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void close() {
         super.close();
-        DAO.clear();
+        daos.clear();
     }
 }

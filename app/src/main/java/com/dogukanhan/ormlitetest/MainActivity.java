@@ -25,17 +25,17 @@ public class MainActivity extends OrmLiteBaseActivity<DatabaseHelper> {
         try {
 
             Category category = new Category();
-            category.setName("test"+new Random().nextInt());
+            category.setName("test" + new Random().nextInt());
 
-            getHelper().DAO.Category().create(category);
+            getHelper().getCategoryDao().create(category);
 
             Product product = new Product();
             product.setName("dogukan han");
             product.setCategory(category);
 
-            getHelper().DAO.Product().create(product);
+            getHelper().getProductDao().create(product);
 
-            String out = getHelper().DAO.Category().queryForAll().get(0).getProducts().iterator().next().getName();
+            String out = getHelper().getCategoryDao().queryForAll().get(0).getProducts().iterator().next().getName();
 
             Log.d("test", "finishes");
             Log.d("test1", "The name is =" + out);
